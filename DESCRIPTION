@@ -1,0 +1,10 @@
+Package: TExT
+Title: Test for Exchangeability in Time Trees
+Version: 0.0.0.9000
+Authors@R: 
+    person("Jennifer", "McNichol", , "jmcnicho@sfu.ca", role = c("aut", "cre"))
+Description: A test for exchangeability in timed phylogentic trees based on the Poisson-binomial distributuion.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
