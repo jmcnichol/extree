@@ -24,7 +24,7 @@
 #' @keywords internal
 #'
 getstattest <- function(tree, usePoly=FALSE) {
-  if (class(tree)!="phylo") {tree=as(tree,"phylo")}
+  if (!inherits(tree,"phylo")) {tree=as(tree,"phylo")}
   if (usePoly) {
     lttb = lttpoly(tree) 
   } else {

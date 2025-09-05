@@ -5,7 +5,10 @@ Authors@R:
     person("Jennifer", "McNichol", , "jmcnicho@sfu.ca", role = c("aut", "cre"))
 Description: A test for exchangeability in timed phylogentic trees based on the Poisson-binomial distributuion.
 Imports: 
-    phytools
+    phytools,
+    methods,
+    ape,
+    lubridate
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

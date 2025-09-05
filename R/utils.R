@@ -1,6 +1,34 @@
 # utils.R
 # Internal utility functions for TExT
 
+#' Identify sequential nodes in a phylogenetic tree
+#'
+#' Internal function to calculate which internal nodes in a phylogenetic tree 
+#' have child lineages that branch sequentially (i.e., differ in rank by 1).
+#'
+#' @param tree An object of class \code{phylo}.
+#'
+#' @return An integer vector of length \code{2 * nTip - 1}, where the first 
+#' \code{ntip} entries (corresponding to tips) are 0, and the remaining 
+#' entries correspond to nodes. A value of 1 indicates a sequential node, 0 otherwise.
+#'
+#' @keywords internal
+#'
+
+snodes = function(tree) { 
+  ntip = length(tree$tip.label)
+  nd.edges =tree$edge[ which(tree$edge[,2] > ntip),]
+  heights = node.depth.edgelength(tree)[(ntip+1):(2*ntip-1)]
+  ranks = order(order(heights)) 
+  rank.version.of.nd.edges = 0*nd.edges
+  rank.version.of.nd.edges[,1]=ranks[nd.edges[,1]-ntip]
+  rank.version.of.nd.edges[,2]=ranks[nd.edges[,2]-ntip]
+  diffs = rank.version.of.nd.edges[,2]-rank.version.of.nd.edges[,1]
+  node.ss = ifelse(diffs ==1, 1, 0)
+  svals = c(0*(1:ntip), node.ss) 
+  return(svals) 
+} 
+
 #' @param tree object of class phylo
 #' @param m an integer; we ask whether each node's desc is among the next m 
 #' @return A list. details: a data frame with success (was descn in the next m), 
@@ -77,7 +105,7 @@ kinm <- function(tree,k=2,m=3) {
 #' 1: number tips are the tips. Order corresponds to the order in the phylo tree. 
 #' @keywords internal 
 lttbelow <- function(tree) {
-  if (class(tree)!="phylo") {tree=as(tree,"phylo")}
+  if (!inherits(tree,"phylo")) {tree=as(tree,"phylo")}
   N=2*tree$Nnode+1 
   Ntips=(N+1)/2 
   times=vector(mode="numeric",length=N)
@@ -102,7 +130,7 @@ lttbelow <- function(tree) {
 #' 1: number tips are the tips. Order corresponds to the order in the phylo tree.
 #' @keywords internal
 lttpoly <- function(tree) {
-  if (class(tree)!="phylo") tree=as(tree,"phylo")
+  if (!inherits(tree,"phylo")) tree=as(tree,"phylo")
   N = tree$Nnode + length(tree$tip.label) 
   Ntips=length(tree$tip.label)
   times=vector(mode="numeric",length=N)
@@ -153,7 +181,7 @@ getrootdate <- function(tree, info) {
 #' @return Data frame linking tip names to sequential branching along paths to root
 #' @keywords internal
 tipprofiles <- function(tree) {
-  if (class(tree)!="phylo") tree=as(tree,"phylo")
+  if (!inherits(tree,"phylo")) {tree=as(tree,"phylo")}
   N=length(tree$tip.label)
   sstuff=getstattest(tree)$details
   sinorder=sstuff$s[order(sstuff$nodeids)]
