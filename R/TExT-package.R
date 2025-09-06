@@ -5,5 +5,6 @@
 #' @importFrom methods as
 #' @importFrom ape node.depth.edgelength
 #' @importFrom lubridate days
+#' @importFrom poibin ppoibin
 ## usethis namespace: end
 NULL
