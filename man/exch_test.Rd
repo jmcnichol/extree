@@ -23,7 +23,7 @@ A list with three elements:
 lineage branched sequentially.}
 \item{\code{nlins}}{The number of lineages
 immediately after the node.}
-\item{\code{probs}}{The probability (\eqn{2/k}) that one
+\item{\code{probs}}{The probability \eqn{\frac{m}{k}} that one
 of the node's child lineages would be next.}
 \item{\code{depth}}{The topological depth of the node.}
 \item{\code{time}}{The branching time of the node.}
