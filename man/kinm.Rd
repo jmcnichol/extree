@@ -14,8 +14,9 @@ kinm(tree, k = 2, m = 3)
 \item{m}{integer: are k of next m descs descended from node i?}
 }
 \value{
-A list.  details: a data frame with success (k desc of i in the next m),
-probabilities (how probable was that), nodeids (as in tree); kmW: W values for all
+A list.  details: a data frame with success
+(k desc of i in the next m), probabilities (how probable was that),
+nodeids (as in tree); kmW: W values for all
 offsets (eg 1, 3, 5, .. for m=2, and 2, 4, 6 ...). W: mean of kmW.
 }
 \description{

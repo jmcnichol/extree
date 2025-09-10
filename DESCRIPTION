@@ -9,7 +9,10 @@ Imports:
     methods,
     ape,
     lubridate,
-    poibin
+    poibin,
+    ggplot2,
+    ggtree,
+    scales
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
