@@ -9,9 +9,7 @@ exch_plot(tree, result)
 \arguments{
 \item{tree}{A phylogenetic tree of class \code{phylo}.}
 
-\item{result}{The output of \code{exch_test}. A list containing the exchangeability test results, with
-a \code{details} data frame that includes node IDs, branching probabilities
-(\code{probs}), and split indicators (\code{s}).}
+\item{result}{The output of \code{exch_test}.}
 }
 \value{
 A \code{ggplot} object displaying the tree with internal nodes
@@ -36,7 +34,7 @@ with higher values indicating greater uncertainty.
 library(ape)
 library(ggtree)
 tree <- rtree(10)
-result <- exch_test(tree)  # hypothetical exchangeability test
+result <- exch_test(tree)
 exch_plot(tree, result)
 }
 

@@ -7,16 +7,14 @@
 #' with higher values indicating greater uncertainty.
 #'
 #' @param tree A phylogenetic tree of class `phylo`.
-#' @param result The output of \code{exch_test}. A list containing the exchangeability test results, with
-#'   a `details` data frame that includes node IDs, branching probabilities
-#'   (`probs`), and split indicators (`s`).
+#' @param result The output of \code{exch_test}.
 #'
-#' @return A `ggplot` object displaying the tree with internal nodes
-#'   colored by entropy values.
+#' @return A `ggplot` object displaying the tree with nodes that
+#'    contribute to the test statistic coloured by entropy values.
 #'
 #' @details
-#' - Only nodes with `s == 1` are plotted (nodes where branching occurs).
-#' - The root is excluded from the entropy visualization.
+#' - Only nodes with `s == 1` are plotted (nodes whose child node is
+#' chronologically next to branch).
 #' - Colors are scaled using the "plasma" palette from `viridis`.
 #'
 #' @examples
@@ -24,7 +22,7 @@
 #' library(ape)
 #' library(ggtree)
 #' tree <- rtree(10)
-#' result <- exch_test(tree)  # hypothetical exchangeability test
+#' result <- exch_test(tree)
 #' exch_plot(tree, result)
 #' }
 #'
