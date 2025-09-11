@@ -52,4 +52,22 @@ print(result)
 result$statistic
 result$pvalue
 head(result$details)
+
+# Tree with a polytomy
+newick <- "((t1:2,t2:2,t3:2,t4:2):4,
+           (((t5:1,t6:1):3,(t7:2,(t8:1,t9:1):1):2):2,
+             ((t10:1,t11:1):3,((t12:1,t13:1):2,(t14:1,t15:1):2):2):2):2);"
+tree <- read.tree(text=newick)
+
+# Run the exchangeability test with poly=TRUE
+result <- exch_test(tree, poly=TRUE)
+
+# Print results
+print(result)
+
+# Access components
+result$statistic
+result$pvalue
+head(result$details)
+
 }

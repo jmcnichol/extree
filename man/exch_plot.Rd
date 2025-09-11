@@ -2,7 +2,7 @@
 % Please edit documentation in R/exch_plot.R
 \name{exch_plot}
 \alias{exch_plot}
-\title{Plot Exchangeability Test Results on a Phylogenetic Tree}
+\title{Plot phylogenetic tree with nodes whose child is "next to branch"}
 \usage{
 exch_plot(tree, result)
 }
@@ -12,20 +12,20 @@ exch_plot(tree, result)
 \item{result}{The output of \code{exch_test}.}
 }
 \value{
-A \code{ggplot} object displaying the tree with internal nodes
-colored by entropy values.
+A \code{ggplot} object displaying the tree with nodes that
+contribute to the test statistic coloured by entropy values.
 }
 \description{
-Visualizes the results of an exchangeability test by mapping node-level
-entropy values onto a phylogenetic tree using \code{ggtree}.
-Entropy is computed as \eqn{\log_2(1/p)}
-for each node's branching probability,
-with higher values indicating greater uncertainty.
+Builds a tree using \code{ggtree} where nodes that contribute to the
+value of the exchnageability test statistc (i.e., their child
+node is chronolocially next to branch) are labelled with a dot.
+To add to the visualization the nodes are coloured in according to
+their value of the Shannon entropy, \eqn{\log_2(1/p)}.
 }
 \details{
 \itemize{
-\item Only nodes with \code{s == 1} are plotted (nodes where branching occurs).
-\item The root is excluded from the entropy visualization.
+\item Only nodes with \code{s == 1} are plotted (nodes whose child node is
+chronologically next to branch).
 \item Colors are scaled using the "plasma" palette from \code{viridis}.
 }
 }

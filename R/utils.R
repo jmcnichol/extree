@@ -216,3 +216,5 @@ tipprofiles <- function(tree) {
                       sWithTopDepths = tipsumtdprod[FIXIND],
                       TipNames = tree$tip.label[FIXIND]))
 }
+
+

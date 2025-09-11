@@ -1,10 +1,10 @@
-#' Plot Exchangeability Test Results on a Phylogenetic Tree
+#' Plot phylogenetic tree with nodes whose child is "next to branch"
 #'
-#' Visualizes the results of an exchangeability test by mapping node-level
-#' entropy values onto a phylogenetic tree using `ggtree`.
-#' Entropy is computed as \eqn{\log_2(1/p)}
-#' for each node's branching probability,
-#' with higher values indicating greater uncertainty.
+#' Builds a tree using `ggtree` where nodes that contribute to the
+#' value of the exchnageability test statistc (i.e., their child
+#' node is chronolocially next to branch) are labelled with a dot.
+#' To add to the visualization the nodes are coloured in according to
+#' their value of the Shannon entropy, \eqn{\log_2(1/p)}.
 #'
 #' @param tree A phylogenetic tree of class `phylo`.
 #' @param result The output of \code{exch_test}.

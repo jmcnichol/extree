@@ -42,6 +42,23 @@
 #' result$statistic
 #' result$pvalue
 #' head(result$details)
+#'
+#' # Tree with a polytomies
+#' newick <- "((t1:2,t2:2,t3:2,t4:2):4,
+#'            (((t5:1,t6:1):3,(t7:2,(t8:1,t9:1):1):2):2,
+#'              ((t10:1,t11:1):3,((t12:1,t13:1):2,(t14:1,t15:1):2):2):2):2);"
+#' tree <- read.tree(text=newick)
+#' # Run the exchangeability test with poly=TRUE
+#' result <- exch_test(tree, poly=TRUE)
+#'
+#' # Print results
+#' print(result)
+#'
+#' # Access components
+#' result$statistic
+#' result$pvalue
+#' head(result$details)
+#'
 #' @export
 
 exch_test <- function(tree, poly = FALSE) {
@@ -71,6 +88,12 @@ exch_test <- function(tree, poly = FALSE) {
     sresult <- vapply(seq_along(intonly), function(x) {
       is.element(nexttobranch[x], declist[[as.character(intonly[x])]])
     }, 0.5)
+    edges <- data.frame(tree$edge)
+    counts <- as.data.frame(table(edges$X1))
+    colnames(counts) <- c("nodeids", "count")
+    counts$countpoly <- ifelse(counts$count > 3, 1, 0)
+    edges <- counts[, c("nodeids", "countpoly")]
+    sresult <- ifelse(sresult | edges$countpoly, 1, 0)
   } else {
     declist <- vapply(intonly, function(x) {
       tree$edge[which(tree$edge[, 1] == x), 2]
