@@ -5,7 +5,7 @@
 #' Poisson-binomial distribution.
 #'
 #' @param tree An object of class \code{phylo}.
-#' @param poly If the tree has polytomies.
+#' @param poly If the tree has polytomies. See details.
 #'
 #' @return A list with three elements:
 #' \enumerate{
@@ -24,6 +24,11 @@
 #'       \item{\code{time}}{The branching time of the node.}
 #'     }
 #' }
+#'
+#' @details If `poly == TRUE`, the tree contains polytomies, the probability of
+#' branching "next" at those nodes is \eqn{m/k} where m is the size of the
+#' polytomy. We add 1 to the value of the test statistic at every polytomy of
+#' size \eqn{>3} to account for rapid branching at that node.
 #'
 #' @examples
 #' library(ape)

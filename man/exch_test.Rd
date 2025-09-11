@@ -9,7 +9,7 @@ exch_test(tree, poly = FALSE)
 \arguments{
 \item{tree}{An object of class \code{phylo}.}
 
-\item{poly}{If the tree has polytomies.}
+\item{poly}{If the tree has polytomies. See details.}
 }
 \value{
 A list with three elements:
@@ -35,6 +35,12 @@ Carries out a test for exchangeability on a timed
 phylogenetic tree. The test is based on the
 Poisson-binomial distribution.
 }
+\details{
+If \code{poly == TRUE}, the tree contains polytomies, the probability of
+branching "next" at those nodes is \eqn{m/k} where m is the size of the
+polytomy. We add 1 to the value of the test statistic at every polytomy of
+size \eqn{>3} to account for rapid branching at that node.
+}
 \examples{
 library(ape)
 
@@ -53,12 +59,11 @@ result$statistic
 result$pvalue
 head(result$details)
 
-# Tree with a polytomy
+# Tree with a polytomies
 newick <- "((t1:2,t2:2,t3:2,t4:2):4,
            (((t5:1,t6:1):3,(t7:2,(t8:1,t9:1):1):2):2,
              ((t10:1,t11:1):3,((t12:1,t13:1):2,(t14:1,t15:1):2):2):2):2);"
 tree <- read.tree(text=newick)
-
 # Run the exchangeability test with poly=TRUE
 result <- exch_test(tree, poly=TRUE)
 
