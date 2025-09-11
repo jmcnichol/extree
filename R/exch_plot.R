@@ -41,7 +41,7 @@ exch_plot <- function(tree, result) {
     node = seq_along(nodedists),
     disttoroot = nodedists
   )
-  res <- merge(res, distdf, by = "nodeids", all.x = TRUE)
+  res <- merge(res, distdf, by = "node", all.x = TRUE)
   ggtree(tree,
          color = "grey",
          layout = "rectangular") %<+% res +
