@@ -2,7 +2,8 @@ Package: extree
 Title: A test for exchangeability in phylogenetic trees
 Version: 0.0.0.9000
 Authors@R: 
-    person("Jennifer", "McNichol", , "jmcnicho@sfu.ca", role = c("aut", "cre"))
+    c(person("Jennifer", "McNichol", , "jmcnicho@sfu.ca", role = c("aut", "cre")),
+    person("Caroline", "Colijn", , "ccolijn@sfu.ca", role = c("aut")))
 Description: A test for exchangeability in timed phylogentic trees based on the Poisson-binomial distributuion.
 Imports: 
     phytools,

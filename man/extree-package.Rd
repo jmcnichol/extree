@@ -11,5 +11,10 @@ A test for exchangeability in timed phylogentic trees based on the Poisson-binom
 \author{
 \strong{Maintainer}: Jennifer McNichol \email{jmcnicho@sfu.ca}
 
+Authors:
+\itemize{
+  \item Caroline Colijn \email{ccolijn@sfu.ca}
+}
+
 }
 \keyword{internal}
