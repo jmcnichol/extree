@@ -1,5 +1,5 @@
-Package: TExT
-Title: Test for Exchangeability in Time Trees
+Package: extree
+Title: A test for exchangeability in phylogenetic trees
 Version: 0.0.0.9000
 Authors@R: 
     person("Jennifer", "McNichol", , "jmcnicho@sfu.ca", role = c("aut", "cre"))

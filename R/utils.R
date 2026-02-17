@@ -1,5 +1,5 @@
 # utils.R
-# Internal utility functions for TExT
+# Internal utility functions for extree
 
 #' Identify sequential nodes in a phylogenetic tree
 #'
