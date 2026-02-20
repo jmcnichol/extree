@@ -11,6 +11,7 @@
 #' @param showInfo Whether to show the information content, -p log(p), for each node. Defaults to FALSE.
 #' @param rootDate For a plot in calendar time, add the date of the root, in Date format
 #' @param breaks The breaks parameter for the x axis  
+#' @param dotsize The size of the dots
 #'
 #' @return A `ggplot` object displaying the tree with nodes that
 #'    contribute to the test statistic coloured by entropy values.
@@ -34,7 +35,7 @@
 #' scale_x_continuous aes guides
 #' @importFrom scales pretty_breaks
 #' @export
-exch_plot <- function(tree, result,showInfo=FALSE, rootDate=0,breaks=6) {
+exch_plot <- function(tree, result,showInfo=FALSE, rootDate=0,breaks=6,dotsize=3) {
   res <- result$details
   colnames(res)[colnames(res) == "nodeids"] <- "node"
   res$entropy <- log2(1 / res$probs)
@@ -49,8 +50,7 @@ exch_plot <- function(tree, result,showInfo=FALSE, rootDate=0,breaks=6) {
              color = "grey",
              layout = "rectangular") %<+% res +
           geom_nodepoint(aes(color = entropy,
-                             subset = s,
-                             size = 3)) +
+                             subset = s ), size=dotsize) +
           scale_colour_viridis_c(option = "plasma",
                                  direction = 1,
                                  name = "Information") +
@@ -64,7 +64,7 @@ exch_plot <- function(tree, result,showInfo=FALSE, rootDate=0,breaks=6) {
       ggtree(tree,
              color = "grey",
              layout = "rectangular") %<+% res +
-          geom_nodepoint(aes(subset = s,size = 3),color="darkblue") +
+          geom_nodepoint(aes(subset = s),color="darkblue",size = dotsize) +
                   theme_tree2() +
           expand_limits(y = -5) +
           scale_x_continuous(name = " ",
