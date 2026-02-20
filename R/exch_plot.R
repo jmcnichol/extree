@@ -1,6 +1,6 @@
 #' Plot phylogenetic tree with nodes whose child is "next to branch"
 #'
-#' Builds a tree using `ggtree` where nodes that contribute to the
+#' Plots a tree, using `ggtree`, where nodes that contribute to the
 #' value of the exchnageability test statistc (i.e., their child
 #' node is chronolocially next to branch) are labelled with a dot.
 #' To add to the visualization the nodes are coloured in according to
@@ -8,6 +8,9 @@
 #'
 #' @param tree A phylogenetic tree of class `phylo`.
 #' @param result The output of \code{exch_test}.
+#' @param showInfo Whether to show the information content, -p log(p), for each node. Defaults to FALSE.
+#' @param rootDate For a plot in calendar time, add the date of the root, in Date format
+#' @param breaks The breaks parameter for the x axis  
 #'
 #' @return A `ggplot` object displaying the tree with nodes that
 #'    contribute to the test statistic coloured by entropy values.
@@ -31,7 +34,7 @@
 #' scale_x_continuous aes guides
 #' @importFrom scales pretty_breaks
 #' @export
-exch_plot <- function(tree, result) {
+exch_plot <- function(tree, result,showInfo=FALSE, rootDate=0,breaks=6) {
   res <- result$details
   colnames(res)[colnames(res) == "nodeids"] <- "node"
   res$entropy <- log2(1 / res$probs)
@@ -39,22 +42,35 @@ exch_plot <- function(tree, result) {
   nodedists <- node.depth.edgelength(tree) 
   distdf <- data.frame(
     node = seq_along(nodedists),
-    disttoroot = nodedists
-  )
+    disttoroot = nodedists)
   res <- merge(res, distdf, by = "node", all.x = TRUE)
-  ggtree(tree,
-         color = "grey",
-         layout = "rectangular") %<+% res +
-    geom_nodepoint(aes(color = res$entropy,
-                       subset = res$s,
-                       size = 3)) +
-    scale_colour_viridis_c(option = "plasma",
-                           direction = 1,
-                           name = "Entropy") +
-theme_tree2() +
-expand_limits(y = -5) +
-scale_x_continuous(name = " ",
-                   breaks = scales::pretty_breaks(10)) +
-guides(size = "none")
+  if (showInfo) { 
+      ggtree(tree,
+             color = "grey",
+             layout = "rectangular") %<+% res +
+          geom_nodepoint(aes(color = entropy,
+                             subset = s,
+                             size = 3)) +
+          scale_colour_viridis_c(option = "plasma",
+                                 direction = 1,
+                                 name = "Information") +
+          theme_tree2() +
+          expand_limits(y = -5) +
+          scale_x_continuous(name = " ",
+                             breaks = scales::pretty_breaks(10)) +
+          guides(size = "none")
+      } 
+  if (!showInfo) { 
+      ggtree(tree,
+             color = "grey",
+             layout = "rectangular") %<+% res +
+          geom_nodepoint(aes(subset = s,size = 3),color="darkblue") +
+                  theme_tree2() +
+          expand_limits(y = -5) +
+          scale_x_continuous(name = " ",
+                             breaks = scales::pretty_breaks(5),
+                             labels = function(x) format(rootDate + 365.25*x, "%Y-%m")) +
+          guides(size = "none")
+      } 
+  }
 
-}

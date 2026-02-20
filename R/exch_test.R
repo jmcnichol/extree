@@ -78,10 +78,10 @@ exch_test <- function(tree, poly = FALSE) {
   } else {
     lttb <- lttbelow(tree)
   }
-  ind <- which(lttb$nodeids > length(tree$tip.label))
-  intonly <- lttb$nodeids[ind]
+  ind <- which(lttb$nodeids > length(tree$tip.label)) 
+  intonly <- lttb$nodeids[ind]  # in chron order, int nodes only 
   nlins <- lttb$lttbelow[ind]
-  nexttobranch <- c(intonly[-1], 0)
+  nexttobranch <- c(intonly[-1], 0) # this stores the next one to branch, for each node
   if (poly) {
     declist <- lapply(intonly, function(x) {
       tree$edge[which(tree$edge[, 1] == x), 2]
@@ -92,13 +92,13 @@ exch_test <- function(tree, poly = FALSE) {
     }, 1)
     sresult <- vapply(seq_along(intonly), function(x) {
       is.element(nexttobranch[x], declist[[as.character(intonly[x])]])
-    }, 0.5)
-    edges <- data.frame(tree$edge)
-    counts <- as.data.frame(table(edges$X1))
-    colnames(counts) <- c("nodeids", "count")
-    counts$countpoly <- ifelse(counts$count > 3, 1, 0)
-    edges <- counts[, c("nodeids", "countpoly")]
-    sresult <- ifelse(sresult | edges$countpoly, 1, 0)
+    }, 0.5) # checked so far , all is well. 
+    # edges <- data.frame(tree$edge)
+    #counts <- as.data.frame(table(edges$X1)) # this is numdesc again *but ordered differently *
+    #colnames(counts) <- c("nodeids", "count")
+    #counts$countpoly <- ifelse(counts$count > 3, 1, 0)
+    # edges <- counts[, c("nodeids", "countpoly")]
+    sresult <- ifelse( sresult >0 | numdesc > 3, 1, 0)
   } else {
     declist <- vapply(intonly, function(x) {
       tree$edge[which(tree$edge[, 1] == x), 2]
