@@ -9,7 +9,7 @@
 #' @param tree A phylogenetic tree of class `phylo`.
 #' @param result The output of \code{exch_test}.
 #' @param showInfo Whether to show the information content, -p log(p), for each node. Defaults to FALSE.
-#' @param rootDate For a plot in calendar time, add the date of the root, in Date format
+#' @param rootDate For a plot in calendar time, add the date of the root in Date format. Defaults to numeric format with value 0.  
 #' @param breaks The breaks parameter for the x axis  
 #' @param dotsize The size of the dots
 #'
@@ -46,7 +46,8 @@ exch_plot <- function(tree, result,showInfo=FALSE, rootDate=0,breaks=6,dotsize=3
     disttoroot = nodedists)
   res <- merge(res, distdf, by = "node", all.x = TRUE)
   if (showInfo) { 
-      ggtree(tree,
+   if (class(rootDate)=="Date") {
+     ggtree(tree,
              color = "grey",
              layout = "rectangular") %<+% res +
           geom_nodepoint(aes(color = entropy,
@@ -57,20 +58,52 @@ exch_plot <- function(tree, result,showInfo=FALSE, rootDate=0,breaks=6,dotsize=3
           theme_tree2() +
           expand_limits(y = -5) +
           scale_x_continuous(name = " ",
-                             breaks = scales::pretty_breaks(10)) +
+                             breaks = scales::pretty_breaks(10),
+                             labels = function(x) format(rootDate + 365.25*x, "%Y-%m")) +
           guides(size = "none")
+   } else { 
+     ggtree(tree,
+            color = "grey",
+            layout = "rectangular") %<+% res +
+       geom_nodepoint(aes(color = entropy,
+                          subset = s ), size=dotsize) +
+       scale_colour_viridis_c(option = "plasma",
+                              direction = 1,
+                              name = "Information") +
+       theme_tree2() +
+       expand_limits(y = -5) +
+       scale_x_continuous(name = " ",
+                          breaks = scales::pretty_breaks(10),
+                          labels = function(x) (rootDate + x)) +
+       guides(size = "none")
+     
+   }
       } 
   if (!showInfo) { 
+    if (class(rootDate)=="Date") {
       ggtree(tree,
              color = "grey",
              layout = "rectangular") %<+% res +
-          geom_nodepoint(aes(subset = s),color="darkblue",size = dotsize) +
+          geom_nodepoint(aes(subset = s),color="black",size = dotsize) +
                   theme_tree2() +
           expand_limits(y = -5) +
           scale_x_continuous(name = " ",
                              breaks = scales::pretty_breaks(5),
                              labels = function(x) format(rootDate + 365.25*x, "%Y-%m")) +
           guides(size = "none")
-      } 
+      } else {
+        ggtree(tree,
+               color = "grey",
+               layout = "rectangular") %<+% res +
+          geom_nodepoint(aes(subset = s),color="black",size = dotsize) +
+          theme_tree2() +
+          expand_limits(y = -5) +
+          scale_x_continuous(name = " ",
+                             breaks = scales::pretty_breaks(5),
+                             labels = function(x) (rootDate + x)) +
+          guides(size = "none")
+        
+      }
+  }
   }
 
