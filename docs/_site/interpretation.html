@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>Interpreting results | extree</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Interpreting results" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Test for exchangeability in timed phylogenies" />
+<meta name="twitter:description" property="og:description" content="Test for exchangeability in timed phylogenies" />
+<link rel="canonical" href="http://localhost:4000/interpretation.html" />
+<meta property="og:url" content="http://localhost:4000/interpretation.html" />
+<meta property="og:site_name" content="extree" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Interpreting results" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Test for exchangeability in timed phylogenies","headline":"Interpreting results","url":"http://localhost:4000/interpretation.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=8cc896c1eacbd927f16b195c4fce145c140ebc60">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">extree</a></h1>
+      
+
+      <h1 id="interpreting-results">Interpreting results</h1>
+
+<p><a href="/">Home</a> · <a href="/getting-started.html">Getting started</a> · <a href="/reference.html">Reference</a></p>
+
+<p>The exchangeability test is based on an observed branching-event statistic, usually denoted <strong>W</strong>. The result includes a test statistic, tail probabilities, and information about the contributing nodes.</p>
+
+<h2 id="the-test-output">The test output</h2>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">extree</span><span class="o">::</span><span class="n">exch_test</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span><span class="w">
+
+</span><span class="n">result</span><span class="o">$</span><span class="n">statistic</span><span class="w">          </span><span class="c1"># observed statistic W</span><span class="w">
+</span><span class="n">result</span><span class="o">$</span><span class="n">pvalue</span><span class="o">$</span><span class="n">lower</span><span class="w">       </span><span class="c1"># lower-tail p-value</span><span class="w">
+</span><span class="n">result</span><span class="o">$</span><span class="n">pvalue</span><span class="o">$</span><span class="n">upper</span><span class="w">       </span><span class="c1"># upper-tail p-value</span><span class="w">
+</span><span class="n">result</span><span class="o">$</span><span class="n">pvalue</span><span class="o">$</span><span class="n">twosided</span><span class="w">    </span><span class="c1"># two-sided p-value</span><span class="w">
+</span></code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Quantity</th>
+      <th>Interpretation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">statistic</code></td>
+      <td>Observed test statistic W.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">pvalue$lower</code></td>
+      <td>Evidence for fewer relevant branching events than expected under the exchangeability null.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">pvalue$upper</code></td>
+      <td>Evidence for more relevant branching events than expected under the exchangeability null.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">pvalue$twosided</code></td>
+      <td>Evidence for a departure in either direction.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A small p-value indicates a discrepancy with the null model, <strong>not</strong> proof of a particular evolutionary mechanism. The two tails distinguish different directions of deviation.</p>
+
+<h2 id="node-level-information">Node-level information</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">details</code> data frame can include:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Column</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">nodeids</code></td>
+      <td>Tree node identifiers.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">s</code></td>
+      <td>Observed event indicator, typically 0 or 1.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">probs</code></td>
+      <td>Null-model probability associated with that event.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">nlins</code></td>
+      <td>Lineage-count information.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">topdepths</code></td>
+      <td>Associated node-depth information.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">times</code></td>
+      <td>Associated times.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>You can inspect the observed event count and its null expectation directly:</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">observed</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">result</span><span class="o">$</span><span class="n">details</span><span class="o">$</span><span class="n">s</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span><span class="n">expected</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">result</span><span class="o">$</span><span class="n">details</span><span class="o">$</span><span class="n">probs</span><span class="p">,</span><span class="w"> </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+
+</span><span class="nf">c</span><span class="p">(</span><span class="n">observed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">observed</span><span class="p">,</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">expected</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="how-to-report-a-result">How to report a result</h2>
+
+<blockquote>
+  <p>We applied the exchangeability test to a dated phylogeny and obtained an observed statistic of W = <strong>[value]</strong>. The lower-tail, upper-tail, and two-sided p-values were <strong>[values]</strong>, respectively. These results <strong>[did / did not]</strong> provide evidence against exchangeability, with the direction of deviation indicating <strong>[fewer / more]</strong> observed branching events than predicted under the null.</p>
+</blockquote>
+
+<p>For biological interpretation, also report the number of tips, tree source, whether you analyzed a posterior sample or a single tree, and any relevant subsampling or sensitivity analyses.</p>
+
+<h2 id="important-cautions">Important cautions</h2>
+
+<ul>
+  <li>A significant result does not by itself distinguish diversification-rate heterogeneity, selective sampling, tree-estimation error, or other causes.</li>
+  <li>Results from a subclade answer a different question than results from the full phylogeny.</li>
+  <li>Treat p-values from many exploratory clade tests as multiple comparisons, where appropriate.</li>
+</ul>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/jmcnichol/extree/edit/gh-pages/interpretation.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>FAQ | extree</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="FAQ" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Test for exchangeability in timed phylogenies" />
+<meta name="twitter:description" property="og:description" content="Test for exchangeability in timed phylogenies" />
+<link rel="canonical" href="http://localhost:4000/faq.html" />
+<meta property="og:url" content="http://localhost:4000/faq.html" />
+<meta property="og:site_name" content="extree" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="FAQ" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Test for exchangeability in timed phylogenies","headline":"FAQ","url":"http://localhost:4000/faq.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=8cc896c1eacbd927f16b195c4fce145c140ebc60">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">extree</a></h1>
+      
+
+      <h1 id="frequently-asked-questions">Frequently asked questions</h1>
+
+<p><a href="/">Home</a> · <a href="/getting-started.html">Getting started</a></p>
+
+<h2 id="can-i-use-a-tree-with-no-branch-lengths">Can I use a tree with no branch lengths?</h2>
+
+<p>Not for an analysis that depends on the timing of branching events. Use a time-calibrated phylogeny with meaningful branch lengths; do not create artificial lengths just to make the function run.</p>
+
+<h2 id="what-if-my-file-contains-multiple-trees">What if my file contains multiple trees?</h2>
+
+<p><code class="language-plaintext highlighter-rouge">ape::read.nexus()</code> can return a <code class="language-plaintext highlighter-rouge">multiPhylo</code> object. Select a tree explicitly or plan an analysis across the posterior sample:</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">trees</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ape</span><span class="o">::</span><span class="n">read.nexus</span><span class="p">(</span><span class="s2">"posterior.trees"</span><span class="p">)</span><span class="w">
+</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inherits</span><span class="p">(</span><span class="n">trees</span><span class="p">,</span><span class="w"> </span><span class="s2">"multiPhylo"</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="n">tree</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">trees</span><span class="p">[[</span><span class="m">1</span><span class="p">]]</span><span class="w">
+</span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="n">tree</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">trees</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Do not treat a single selected tree as automatically representing phylogenetic uncertainty.</p>
+
+<h2 id="what-does-a-small-lower-tail-p-value-mean">What does a small lower-tail p-value mean?</h2>
+
+<p>It indicates that the observed statistic falls unusually low under the exchangeability null. A small upper-tail p-value indicates the opposite direction.</p>
+
+<h2 id="does-a-nonsignificant-test-prove-exchangeability">Does a nonsignificant test prove exchangeability?</h2>
+
+<p>No. Failure to reject the null is not proof that the model is correct. Power can depend on the number of tips and the form and magnitude of the departure.</p>
+
+<h2 id="is-there-a-way-to-locate-the-contributing-nodes">Is there a way to locate the contributing nodes?</h2>
+
+<p>Yes. Inspect <code class="language-plaintext highlighter-rouge">result$details</code> and use the package’s plotting functions:</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">result</span><span class="o">$</span><span class="n">details</span><span class="w">
+</span><span class="n">extree</span><span class="o">::</span><span class="n">exch_plot2</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="why-does-github-pages-look-different-from-my-local-preview">Why does GitHub Pages look different from my local preview?</h2>
+
+<p>Confirm that <code class="language-plaintext highlighter-rouge">docs/_config.yml</code> has the correct theme and <code class="language-plaintext highlighter-rouge">baseurl</code>. For a project repository, the base URL is typically <code class="language-plaintext highlighter-rouge">/&lt;repository-name&gt;</code>, for example <code class="language-plaintext highlighter-rouge">/extree</code>. Internal documentation links in these pages use Jekyll’s <code class="language-plaintext highlighter-rouge">relative_url</code> filter so they work under that prefix.</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/jmcnichol/extree/edit/gh-pages/faq.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>

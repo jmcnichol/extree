@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>extree | Test for exchangeability in timed phylogenies</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="extree" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Test for exchangeability in timed phylogenies" />
+<meta name="twitter:description" property="og:description" content="Test for exchangeability in timed phylogenies" />
+<link rel="canonical" href="http://localhost:4000/" />
+<meta property="og:url" content="http://localhost:4000/" />
+<meta property="og:site_name" content="extree" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="extree" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","description":"Test for exchangeability in timed phylogenies","headline":"extree","name":"extree","url":"http://localhost:4000/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=8cc896c1eacbd927f16b195c4fce145c140ebc60">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+
+      <h1 id="extree">extree</h1>
+
+<p><strong>Tools for testing exchangeability in time-calibrated phylogenetic trees.</strong></p>
+
+<p>Phylogenetic models often assume that contemporaneous lineages are exchangeable: at a given time, the labels of lineages do not determine which lineage experiences the next branching event. The <code class="language-plaintext highlighter-rouge">extree</code> R package provides a way to investigate this assumption using information contained in the branching structure and timing of an observed phylogeny.</p>
+
+<p>The principal function, <code class="language-plaintext highlighter-rouge">exch_test()</code>, summarizes the observed branching-event pattern and returns lower-tail, upper-tail, and two-sided p-values. The associated plotting functions help visualize where relevant branching events occur on the tree.</p>
+
+<h2 id="quick-example">Quick example</h2>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">ape</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">extree</span><span class="p">)</span><span class="w">
+
+</span><span class="n">tree</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read.nexus</span><span class="p">(</span><span class="s2">"my_dated_tree.nex"</span><span class="p">)</span><span class="w">
+</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inherits</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span><span class="w"> </span><span class="s2">"multiPhylo"</span><span class="p">))</span><span class="w"> </span><span class="n">tree</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tree</span><span class="p">[[</span><span class="m">1</span><span class="p">]]</span><span class="w">
+
+</span><span class="n">result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">exch_test</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span><span class="w">
+</span><span class="n">result</span><span class="o">$</span><span class="n">statistic</span><span class="w">
+</span><span class="n">result</span><span class="o">$</span><span class="n">pvalue</span><span class="w">
+
+</span><span class="c1"># Inspect the branching events underlying the test</span><span class="w">
+</span><span class="n">head</span><span class="p">(</span><span class="n">result</span><span class="o">$</span><span class="n">details</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Use a rooted, time-calibrated tree with meaningful branch lengths. Do not assign artificial branch lengths to a topology-only tree.</p>
+
+<h2 id="documentation">Documentation</h2>
+
+<ul>
+  <li><a href="/getting-started.html">Getting started</a> — installation, loading a tree, and running your first test.</li>
+  <li><a href="/interpretation.html">Interpreting results</a> — the statistic, p-values, and what departures from exchangeability mean.</li>
+  <li><a href="/reference.html">Function reference</a> — the core functions and returned objects.</li>
+  <li><a href="/faq.html">Frequently asked questions</a> — common input and plotting issues.</li>
+</ul>
+
+<h2 id="why-test-exchangeability">Why test exchangeability?</h2>
+
+<p>Exchangeability underlies many commonly used stochastic models for phylogenetic trees, including several coalescent and branching-process models. A departure from exchangeability may point to lineage-specific differences in the processes generating the tree, but the test alone does not identify a unique biological mechanism. Interpret results in light of tree reconstruction, sampling, and other model assumptions.</p>
+
+<h2 id="citation">Citation</h2>
+
+<p>If you use <code class="language-plaintext highlighter-rouge">extree</code> in published work, cite the associated software or methods paper when a formal citation is available. <strong>[Add the definitive package or paper citation here.]</strong></p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/jmcnichol/extree/edit/gh-pages/index.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>

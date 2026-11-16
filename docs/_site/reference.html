@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>Function reference | extree</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Function reference" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Test for exchangeability in timed phylogenies" />
+<meta name="twitter:description" property="og:description" content="Test for exchangeability in timed phylogenies" />
+<link rel="canonical" href="http://localhost:4000/reference.html" />
+<meta property="og:url" content="http://localhost:4000/reference.html" />
+<meta property="og:site_name" content="extree" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Function reference" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Test for exchangeability in timed phylogenies","headline":"Function reference","url":"http://localhost:4000/reference.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=8cc896c1eacbd927f16b195c4fce145c140ebc60">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">extree</a></h1>
+      
+
+      <h1 id="function-reference">Function reference</h1>
+
+<p><a href="/">Home</a> · <a href="/getting-started.html">Getting started</a> · <a href="/interpretation.html">Interpreting results</a></p>
+
+<p>This page documents functions and output fields used in current analyses. Consult the installed function signatures for the exact argument names in your package version.</p>
+
+<h2 id="exch_test"><code class="language-plaintext highlighter-rouge">exch_test()</code></h2>
+
+<p>Runs the exchangeability test on a phylogenetic tree.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">extree</span><span class="o">::</span><span class="n">exch_test</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>Input:</strong> An <code class="language-plaintext highlighter-rouge">ape</code> <code class="language-plaintext highlighter-rouge">phylo</code> tree with meaningful branch lengths and timing.</p>
+
+<p><strong>Output:</strong> A list with the following components:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Content</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">statistic</code></td>
+      <td>Observed test statistic W.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">pvalue</code></td>
+      <td>Data frame with <code class="language-plaintext highlighter-rouge">lower</code>, <code class="language-plaintext highlighter-rouge">upper</code>, and <code class="language-plaintext highlighter-rouge">twosided</code> p-values.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">details</code></td>
+      <td>Node-level data including <code class="language-plaintext highlighter-rouge">nodeids</code>, <code class="language-plaintext highlighter-rouge">s</code>, <code class="language-plaintext highlighter-rouge">nlins</code>, <code class="language-plaintext highlighter-rouge">probs</code>, <code class="language-plaintext highlighter-rouge">topdepths</code>, and <code class="language-plaintext highlighter-rouge">times</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">names</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="w">
+</span><span class="n">str</span><span class="p">(</span><span class="n">result</span><span class="p">,</span><span class="w"> </span><span class="n">max.level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="exch_plot2"><code class="language-plaintext highlighter-rouge">exch_plot2()</code></h2>
+
+<p>Visualizes the tree and information associated with a fitted exchangeability test.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">extree</span><span class="o">::</span><span class="n">exch_plot2</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">)</span><span class="w">
+</span><span class="n">args</span><span class="p">(</span><span class="n">extree</span><span class="o">::</span><span class="n">exch_plot2</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Depending on package version, display controls may include <code class="language-plaintext highlighter-rouge">showInfo</code>, <code class="language-plaintext highlighter-rouge">rootDate</code>, <code class="language-plaintext highlighter-rouge">breaks</code>, <code class="language-plaintext highlighter-rouge">dotsize</code>, and <code class="language-plaintext highlighter-rouge">showTipLabels</code>.</p>
+
+<h2 id="inspect-the-installed-package">Inspect the installed package</h2>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">packageVersion</span><span class="p">(</span><span class="s2">"extree"</span><span class="p">)</span><span class="w">
+</span><span class="n">getNamespaceExports</span><span class="p">(</span><span class="s2">"extree"</span><span class="p">)</span><span class="w">
+</span><span class="n">help</span><span class="p">(</span><span class="n">package</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"extree"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>To complete this reference:</strong> Replace these brief summaries with function signatures, parameter definitions, return values, and worked examples drawn directly from the current R source or roxygen documentation.</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/jmcnichol/extree/edit/gh-pages/reference.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>Getting started | extree</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Getting started" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Test for exchangeability in timed phylogenies" />
+<meta name="twitter:description" property="og:description" content="Test for exchangeability in timed phylogenies" />
+<link rel="canonical" href="http://localhost:4000/getting-started.html" />
+<meta property="og:url" content="http://localhost:4000/getting-started.html" />
+<meta property="og:site_name" content="extree" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Getting started" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Test for exchangeability in timed phylogenies","headline":"Getting started","url":"http://localhost:4000/getting-started.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=8cc896c1eacbd927f16b195c4fce145c140ebc60">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">extree</a></h1>
+      
+
+      <h1 id="getting-started">Getting started</h1>
+
+<p><a href="/">Home</a> · <a href="/interpretation.html">Interpreting results</a> · <a href="/reference.html">Reference</a></p>
+
+<h2 id="install-the-r-package">Install the R package</h2>
+
+<p>From R, install the package from its GitHub repository (replace <code class="language-plaintext highlighter-rouge">GITHUB_OWNER</code> with the repository owner):</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">install.packages</span><span class="p">(</span><span class="s2">"remotes"</span><span class="p">)</span><span class="w">
+</span><span class="n">remotes</span><span class="o">::</span><span class="n">install_github</span><span class="p">(</span><span class="s2">"GITHUB_OWNER/extree"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>This command assumes <code class="language-plaintext highlighter-rouge">extree</code> has a standard installable R-package structure. If it is not installable with <code class="language-plaintext highlighter-rouge">remotes</code>, document the repository’s actual installation command here.</p>
+
+<h2 id="load-a-tree">Load a tree</h2>
+
+<p><code class="language-plaintext highlighter-rouge">extree</code> works with phylogenetic trees represented as <code class="language-plaintext highlighter-rouge">ape</code> objects. For example:</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">ape</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">extree</span><span class="p">)</span><span class="w">
+
+</span><span class="n">tree</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ape</span><span class="o">::</span><span class="n">read.nexus</span><span class="p">(</span><span class="s2">"path/to/your_dated_tree.nex"</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># A NEXUS file may contain multiple trees.</span><span class="w">
+</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inherits</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span><span class="w"> </span><span class="s2">"multiPhylo"</span><span class="p">))</span><span class="w"> </span><span class="n">tree</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tree</span><span class="p">[[</span><span class="m">1</span><span class="p">]]</span><span class="w">
+
+</span><span class="nf">class</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span><span class="w">
+</span><span class="n">ape</span><span class="o">::</span><span class="n">Ntip</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span><span class="w">
+</span><span class="n">ape</span><span class="o">::</span><span class="n">is.rooted</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span><span class="w">
+</span><span class="n">ape</span><span class="o">::</span><span class="n">is.ultrametric</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>For a Newick file, use <code class="language-plaintext highlighter-rouge">ape::read.tree("path/to/tree.newick")</code> instead.</p>
+
+<h2 id="check-branch-lengths">Check branch lengths</h2>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">stopifnot</span><span class="p">(</span><span class="w">
+  </span><span class="n">inherits</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span><span class="w"> </span><span class="s2">"phylo"</span><span class="p">),</span><span class="w">
+  </span><span class="o">!</span><span class="nf">is.null</span><span class="p">(</span><span class="n">tree</span><span class="o">$</span><span class="n">edge.length</span><span class="p">),</span><span class="w">
+  </span><span class="nf">all</span><span class="p">(</span><span class="nf">is.finite</span><span class="p">(</span><span class="n">tree</span><span class="o">$</span><span class="n">edge.length</span><span class="p">)),</span><span class="w">
+  </span><span class="nf">all</span><span class="p">(</span><span class="n">tree</span><span class="o">$</span><span class="n">edge.length</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>For an analysis based on event timing, use a dated tree and review the time calibration. If the source is a posterior distribution of trees, decide in advance whether to analyze one representative tree or repeat the test over trees.</p>
+
+<h2 id="run-the-test">Run the test</h2>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">extree</span><span class="o">::</span><span class="n">exch_test</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span><span class="w">
+
+</span><span class="n">result</span><span class="o">$</span><span class="n">statistic</span><span class="w">
+</span><span class="n">result</span><span class="o">$</span><span class="n">pvalue</span><span class="w">
+</span><span class="n">head</span><span class="p">(</span><span class="n">result</span><span class="o">$</span><span class="n">details</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>The p-value object includes <code class="language-plaintext highlighter-rouge">lower</code>, <code class="language-plaintext highlighter-rouge">upper</code>, and <code class="language-plaintext highlighter-rouge">twosided</code> values. See <a href="/interpretation.html">Interpreting results</a> for their meanings.</p>
+
+<h2 id="visualize-results">Visualize results</h2>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">extree</span><span class="o">::</span><span class="n">exch_plot2</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>The plotting function has additional display options in versions used in analyses, including <code class="language-plaintext highlighter-rouge">showInfo</code>, <code class="language-plaintext highlighter-rouge">rootDate</code>, <code class="language-plaintext highlighter-rouge">breaks</code>, <code class="language-plaintext highlighter-rouge">dotsize</code>, and <code class="language-plaintext highlighter-rouge">showTipLabels</code>. Check the version installed on your machine for exact argument requirements:</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">args</span><span class="p">(</span><span class="n">extree</span><span class="o">::</span><span class="n">exch_plot2</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="next-steps">Next steps</h2>
+
+<ul>
+  <li>Try a small, well-dated tree first.</li>
+  <li>Check both tails of the test rather than relying on the two-sided p-value alone.</li>
+  <li>Record the tree source, dating method, sampling scheme, and package version alongside the result.</li>
+</ul>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/jmcnichol/extree/edit/gh-pages/getting-started.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>
