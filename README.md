@@ -22,7 +22,7 @@ Install the development version from GitHub:
 
 ```r
 install.packages("remotes")
-remotes::install_github("OWNER/extree")
+remotes::install_github("jmcnichol/extree")
 ```
 
 Replace `OWNER` with the GitHub account or organization hosting this repository.
