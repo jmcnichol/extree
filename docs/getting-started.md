@@ -9,11 +9,11 @@ title: Getting started
 
 ## Install the R package
 
-From R, install the package from its GitHub repository (replace `GITHUB_OWNER` with the repository owner):
+From R, install the package from its GitHub repository (replace `jmcnichol` with the repository owner):
 
 ```r
 install.packages("remotes")
-remotes::install_github("GITHUB_OWNER/extree")
+remotes::install_github("jmcnichol/extree")
 ```
 
 This command assumes `extree` has a standard installable R-package structure. If it is not installable with `remotes`, document the repository's actual installation command here.
