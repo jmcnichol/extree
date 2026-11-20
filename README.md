@@ -25,13 +25,6 @@ install.packages("remotes")
 remotes::install_github("jmcnichol/extree")
 ```
 
-Replace `OWNER` with the GitHub account or organization hosting this repository.
-
-If you have already cloned the repository, you can install the package from the repository root:
-
-```r
-remotes::install_local(".")
-```
 
 ## Quick start
 
